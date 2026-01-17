@@ -2,9 +2,9 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getTrendingMovies } from "@/services/API";
-import { Spinner } from "./ui/spinner";
 
 import CarouselWithTitle from "./CarouselWithTitle";
+import MySpinner from "./Spinner";
 
 const TrendingMovies = () => {
   const {
@@ -15,7 +15,7 @@ const TrendingMovies = () => {
   } = useQuery({ queryKey: ["trendingMovies"], queryFn: getTrendingMovies });
 
   if (isPending) {
-    return <Spinner />;
+    return <MySpinner />;
   }
 
   if (isError) {

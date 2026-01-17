@@ -1,4 +1,5 @@
 import CarouselWithTitle from "@/components/CarouselWithTitle";
+import MySpinner from "@/components/Spinner";
 import { Spinner } from "@/components/ui/spinner";
 import { useInfiniteScrollObserver } from "@/hooks/useInfiniteScrollObserver";
 import { useMovieGenres } from "@/hooks/useMovieGenres";
@@ -25,7 +26,7 @@ const AllMovies = () => {
   const sentinelRef = useInfiniteScrollObserver(loadMore, hasMore);
 
   if (isFetching) {
-    return <Spinner />;
+    return <MySpinner />;
   }
 
   if (isError) {

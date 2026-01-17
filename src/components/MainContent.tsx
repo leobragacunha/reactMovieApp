@@ -1,7 +1,9 @@
 import { getUpcomingMovies } from "@/services/API";
 import { useQuery } from "@tanstack/react-query";
-import { Spinner } from "./ui/spinner";
 import { imageBaseURL } from "@/services/API";
+import { Link } from "react-router";
+
+import MySpinner from "./Spinner";
 
 const MainContent = () => {
   const {
@@ -15,7 +17,7 @@ const MainContent = () => {
   });
 
   if (isPending) {
-    return <Spinner />;
+    return <MySpinner />;
   }
 
   if (isError) {
@@ -29,18 +31,20 @@ const MainContent = () => {
   // console.log(backgroundImageURL);
 
   return (
-    <div
-      className={`h-[70vh] bg-linear-to-b from-transparent flex-col text-white to-gray-700 flex justify-end`}
-      // Tailwind does not accept variables in bg-image, so we use inline style
-      style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1)), url(${backgroundImageURL})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <h1 className="mx-8 text-8xl">{mainMovie.original_title}</h1>
-      <h2 className="mx-8 my-2 text-xl">{mainMovie.release_date}</h2>
-    </div>
+    <Link to={`/movie/${mainMovie.id}`}>
+      <div
+        className={`h-[70vh] bg-linear-to-b from-transparent flex-col text-white to-gray-700 flex justify-end`}
+        // Tailwind does not accept variables in bg-image, so we use inline style
+        style={{
+          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1)), url(${backgroundImageURL})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <h1 className="mx-8 text-8xl">{mainMovie.original_title}</h1>
+        <h2 className="mx-8 my-2 text-xl">{mainMovie.release_date}</h2>
+      </div>
+    </Link>
   );
 };
 

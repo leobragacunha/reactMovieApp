@@ -5,6 +5,7 @@ import { Spinner } from "@/components/ui/spinner";
 import CardWithInfo from "@/components/CardWithInfo";
 import { useInfiniteScrollObserver } from "@/hooks/useInfiniteScrollObserver";
 import { useGenrePagination } from "@/hooks/useGenrePagination";
+import MySpinner from "@/components/Spinner";
 
 const AllMoviesFromGenre = () => {
   const { genreId } = useParams<{ genreId: string }>();
@@ -43,7 +44,7 @@ const AllMoviesFromGenre = () => {
   if (!genreId) return;
 
   // useMovieGenres
-  if (isFetchingGenres) return <Spinner />;
+  if (isFetchingGenres) return <MySpinner />;
   if (isErrorGenres) {
     return (
       <div>

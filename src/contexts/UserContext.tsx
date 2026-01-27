@@ -8,6 +8,7 @@ import {
   createContext,
   type ReactNode,
   useContext,
+  useMemo,
 } from "react";
 
 const UserContext = createContext<AuthProps | undefined>(undefined);
@@ -87,21 +88,20 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     });
   }
 
-  return (
-    <UserContext.Provider
-      value={{
-        isLoading,
-        signUp,
-        signIn,
-        session,
-        user,
-        isAuthenticated: !!user,
-        signOut,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+  const value = useMemo(
+    () => ({
+      isLoading,
+      signUp,
+      signIn,
+      session,
+      user,
+      isAuthenticated: !!user,
+      signOut,
+    }),
+    [isLoading, signUp, signIn, session, user, signOut]
   );
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export function useUserContext() {

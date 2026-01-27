@@ -1,5 +1,6 @@
 import { useUserContext } from "@/contexts/UserContext";
-import type { LoginFormProps, LoginResponseProps } from "@/types/login";
+import { createProfile } from "@/services/supabaseAPI";
+import type { LoginFormProps } from "@/types/login";
 import { useMutation } from "@tanstack/react-query";
 
 export function useLogin() {
@@ -22,6 +23,11 @@ export function useLogin() {
     //   console.log("Funcionou");
     //   console.log("Mutation data:", data);
     // },
+    onSuccess: ({ data }) => {
+      if (data?.user) {
+        createProfile(data.user.id);
+      }
+    },
     onError: (error) => console.log("Error:", error.message),
   });
 

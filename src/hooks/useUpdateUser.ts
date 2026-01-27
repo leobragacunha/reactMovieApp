@@ -4,12 +4,12 @@ import type {
   userUpdateObject,
 } from "@/schemas/updateUser";
 import { useUserContext } from "@/contexts/UserContext";
-import { supabase } from "@/services/supabaseAPI";
+import { supabase, updateProfile } from "@/services/supabaseAPI";
 
 export function useUpdateUser() {
   const { user } = useUserContext();
 
-  const updateProfile = async ({
+  const updateUser = async ({
     name,
     email,
     password,
@@ -47,6 +47,11 @@ export function useUpdateUser() {
     if (error) {
       throw error;
     }
+
+    console.log(updates);
+
+    if (updates?.data?.fullName || updates?.data?.photoPath)
+      updateProfile(user.id, updates.data.fullName, updates.data.photoPath);
   };
 
   return useMutation({
@@ -57,7 +62,7 @@ export function useUpdateUser() {
       photoPath,
       isPhotoModified,
     }: updateUserFormData) =>
-      updateProfile({ email, password, name, photoPath, isPhotoModified }),
+      updateUser({ email, password, name, photoPath, isPhotoModified }),
     onError: (error) => console.log("Error:", error.message),
   });
 }
